@@ -271,6 +271,12 @@ fieldset.fRow{border:0;padding:0;min-width:0}
 .groundMag .peck{transform-box:fill-box;transform-origin:70% 90%;animation:peck 5s ease-in-out infinite}
 @keyframes peck{0%,80%,100%{transform:rotate(0)}85%{transform:rotate(28deg)}90%{transform:rotate(0)}93%{transform:rotate(26deg)}}
 @media (prefers-reduced-motion: reduce){.groundMag .peck{animation:none}}
+
+.xlight{animation:xtwinkle 1.6s ease-in-out infinite alternate}
+@keyframes xtwinkle{to{opacity:.35}}
+.bunnyHop{transform-box:fill-box;transform-origin:bottom;animation:bunnyhop 5s ease-in-out infinite}
+@keyframes bunnyhop{0%,72%,100%{transform:translateY(0)}78%{transform:translateY(-6px)}84%{transform:translateY(0)}88%{transform:translateY(-3px)}92%{transform:translateY(0)}}
+@media (prefers-reduced-motion: reduce){.xlight,.bunnyHop{animation:none}}
 </style>
 </head>
 <body>
@@ -431,7 +437,7 @@ fieldset.fRow{border:0;padding:0;min-width:0}
     <path class="chalkln" d="M-29.5 -6.5h5M-29.5 -4h4"/>
   </g>
   <!-- Destination: community, growing together -->
-  <g aria-hidden="true" transform="translate(200,210)">
+  <g aria-hidden="true" class="gathering" transform="translate(200,210)">
     <rect class="trunk" x="-5" y="-46" width="10" height="40"/>
     <circle class="tree" cx="0" cy="-78" r="34"/><circle class="tree" cx="-30" cy="-60" r="22"/><circle class="tree" cx="30" cy="-60" r="22"/>
     <path d="M-56 -58 Q0 -40 56 -58" fill="none" stroke="#3a2a1a" stroke-width=".8"/><circle cx="-50" cy="-56.2" r="1.8" class="bulb"/><circle cx="-40" cy="-53.6" r="1.8" class="bulb"/><circle cx="-30" cy="-51.6" r="1.8" class="bulb"/><circle cx="-20" cy="-50.1" r="1.8" class="bulb"/><circle cx="-10" cy="-49.3" r="1.8" class="bulb"/><circle cx="0" cy="-49.0" r="1.8" class="bulb"/><circle cx="10" cy="-49.3" r="1.8" class="bulb"/><circle cx="20" cy="-50.1" r="1.8" class="bulb"/><circle cx="30" cy="-51.6" r="1.8" class="bulb"/><circle cx="40" cy="-53.6" r="1.8" class="bulb"/><circle cx="50" cy="-56.2" r="1.8" class="bulb"/>
@@ -527,7 +533,7 @@ fieldset.fRow{border:0;padding:0;min-width:0}
 
   var STEPS = {
     visit:{t:"Plan your visit", d:"Sundays at 8:30am and 10:30am, 30 McKechnie Drive, Eight Mile Plains.", cta:"See where we meet", url:SITE+"/where-we-meet"},
-    discover:{t:"Discover", d:"Our course for exploring Christianity. Next course: Term 1, 2027. Bring your questions, no background needed.", pick:"Let me know when it starts", cta:"Find out about Discover", url:SITE+"/discover"},
+    discover:{t:"Discover", d:"Our course for exploring Christianity. Next course: Term 1, 2027. Bring your questions, no background needed.", pick:"I’d like to come to Discover", cta:"Find out about Discover", url:SITE+"/discover"},
     groups:{t:"Growth Groups", d:"Small groups that meet through the week to read the Bible, pray and share life together.", cta:"Watch this video before joining", url:"https://youtu.be/l9nRdkGaUKs"},
     team:{t:"Serving Teams", d:"Use your gifts to love others. From welcome and kids to music and tech, there’s a place for you.", cta:"Or fill in the full team form", url:SITE+"/ministryform", pick:"I’d like to join the team"},
     discoverInvite:{t:"Discover Course", d:"Bring someone to Discover to discover Jesus. Next course: Term 1, 2027.", cta:"Find out about Discover", url:SITE+"/discover"},
@@ -551,6 +557,7 @@ fieldset.fRow{border:0;padding:0;min-width:0}
   function dashFor(on, len){ var s = [], t = 0; while (t + 11 <= on){ s.push(2,9); t += 11; } s.push(0, len + 20); return s.join(" "); }
   function pt(e,l){ return e.el.getPointAtLength(Math.max(0,Math.min(e.len,l))); }
 
+  var TREE_G = [];
   // trees (kept clear of the roads), a few with magpies
   var TREE_EXTRAS = {0:'<g class="perch" transform="translate(4,-31)"><ellipse cx="0" cy="0" rx="3" ry="2" fill="#2b2b2b"/><path d="M2.4 .2 l3.6 1.4 l-3.6 .3z" fill="#2b2b2b"/><circle cx="-2.4" cy="-1.5" r="1.6" fill="#2b2b2b"/><path d="M-1 -.4 q1.4 1.6 3 .6" fill="none" stroke="#f4f2ee" stroke-width=".6"/><path d="M-3.8 -1.5 l-1.3 .4 l1.3 .4z" fill="#d9a334"/></g>',3:'<g class="perch" transform="translate(-3,-31)"><ellipse cx="0" cy="0" rx="3" ry="2" fill="#2b2b2b"/><path d="M2.4 .2 l3.6 1.4 l-3.6 .3z" fill="#2b2b2b"/><circle cx="-2.4" cy="-1.5" r="1.6" fill="#2b2b2b"/><path d="M-1 -.4 q1.4 1.6 3 .6" fill="none" stroke="#f4f2ee" stroke-width=".6"/><path d="M-3.8 -1.5 l-1.3 .4 l1.3 .4z" fill="#d9a334"/></g>',8:'<g class="perch" transform="translate(2,-31) scale(-1,1)"><ellipse cx="0" cy="0" rx="3" ry="2" fill="#2b2b2b"/><path d="M2.4 .2 l3.6 1.4 l-3.6 .3z" fill="#2b2b2b"/><circle cx="-2.4" cy="-1.5" r="1.6" fill="#2b2b2b"/><path d="M-1 -.4 q1.4 1.6 3 .6" fill="none" stroke="#f4f2ee" stroke-width=".6"/><path d="M-3.8 -1.5 l-1.3 .4 l1.3 .4z" fill="#d9a334"/></g>',13:'<g class="perch" transform="translate(-2,-31)"><ellipse cx="0" cy="0" rx="3" ry="2" fill="#2b2b2b"/><path d="M2.4 .2 l3.6 1.4 l-3.6 .3z" fill="#2b2b2b"/><circle cx="-2.4" cy="-1.5" r="1.6" fill="#2b2b2b"/><path d="M-1 -.4 q1.4 1.6 3 .6" fill="none" stroke="#f4f2ee" stroke-width=".6"/><path d="M-3.8 -1.5 l-1.3 .4 l1.3 .4z" fill="#d9a334"/></g>'};
 
@@ -558,7 +565,7 @@ fieldset.fRow{border:0;padding:0;min-width:0}
     var g = document.createElementNS(ns,"g"); g.setAttribute("transform","translate("+p[0]+","+p[1]+")");
     g.innerHTML = '<rect class="trunk" x="-3" y="-4" width="6" height="14"/><circle class="tree" cx="0" cy="-16" r="15"/><circle class="tree" cx="-9" cy="-6" r="10"/><circle class="tree" cx="9" cy="-6" r="10"/>';
     if (TREE_EXTRAS[i]) g.insertAdjacentHTML("beforeend", TREE_EXTRAS[i]);
-    document.getElementById("trees").appendChild(g);
+    document.getElementById("trees").appendChild(g); TREE_G.push(g);
   });
   // signs
   SIGNS.forEach(function(s){
@@ -575,6 +582,48 @@ fieldset.fRow{border:0;padding:0;min-width:0}
     }
     document.getElementById("signs").appendChild(g);
   });
+
+  // ===== Seasonal themes (automatic by date; preview with ?theme=christmas or ?theme=easter) =====
+  function easterSunday(y){ var a=y%19,b=Math.floor(y/100),c=y%100,d=Math.floor(b/4),e=b%4,f=Math.floor((b+8)/25),g=Math.floor((b-f+1)/3),h=(19*a+b-d-g+15)%30,i=Math.floor(c/4),k=c%4,l=(32+2*e+2*i-h-k)%7,m=Math.floor((a+11*h+22*l)/451),mo=Math.floor((h+l-7*m+114)/31),da=((h+l-7*m+114)%31)+1; return new Date(y, mo-1, da); }
+  function currentTheme(){
+    var q = (location.search.match(/[?&]theme=(\w+)/) || [])[1]; if (q) return q;
+    var now = new Date(), y = now.getFullYear();
+    if (now.getMonth() === 11) return "christmas";
+    var es = easterSunday(y), from = new Date(es), to = new Date(es); from.setDate(es.getDate() - 7); to.setDate(es.getDate() + 8);
+    if (now >= from && now < to) return "easter";
+    return "";
+  }
+  var THEME = currentTheme();
+  if (THEME === "christmas"){
+    var cols = ["#ff4b4b","#ffd23f","#36d67e","#3fa2ff","#fff4c2"], spots = [[-9,-22],[-2,-27],[6,-23],[10,-14],[-12,-10],[-4,-14],[3,-8],[12,-5],[-8,-3],[0,-19]];
+    TREE_G.forEach(function(g, ti){
+      spots.forEach(function(s, si){ var c = document.createElementNS(ns,"circle"); c.setAttribute("cx", s[0]); c.setAttribute("cy", s[1]); c.setAttribute("r", 1.5);
+        c.setAttribute("class","xlight"); c.setAttribute("fill", cols[(si+ti)%cols.length]); c.style.animationDelay = ((si*0.37+ti*0.21)%1.6).toFixed(2)+"s"; g.appendChild(c); });
+      g.insertAdjacentHTML("beforeend", '<path d="M0 -36 l1.6 3.4 3.7 .4 -2.8 2.5 .8 3.7 -3.3 -1.9 -3.3 1.9 .8 -3.7 -2.8 -2.5 3.7 -.4z" fill="#ffd23f"/>');
+    });
+    var gath = document.querySelector(".gathering");
+    if (gath){
+      var gl = ""; for (var i = 0; i < 26; i++){ var a = i/26*Math.PI*2, r = 18 + (i%3)*8; gl += '<circle class="xlight" r="2" cx="'+(Math.cos(a)*r*1.3).toFixed(1)+'" cy="'+(-74+Math.sin(a)*r*.9).toFixed(1)+'" fill="'+cols[i%cols.length]+'" style="animation-delay:'+(i*0.13%1.6).toFixed(2)+'s"/>'; }
+      gl += '<path d="M0 -122 l3 6.4 7 .7 -5.3 4.7 1.5 6.9 -6.2 -3.6 -6.2 3.6 1.5 -6.9 -5.3 -4.7 7 -.7z" fill="#ffd23f" stroke="#e0a447" stroke-width=".6"/>';
+      gl += '<rect x="-30" y="-14" width="10" height="9" fill="#d9283b"/><path d="M-25 -14v9M-30 -10h10" stroke="#ffd23f" stroke-width="1.4"/><rect x="18" y="-13" width="9" height="8" fill="#2f6bd1"/><path d="M22.5 -13v8M18 -9h9" stroke="#fff" stroke-width="1.3"/>';
+      gath.insertAdjacentHTML("beforeend", gl);
+    }
+  } else if (THEME === "easter"){
+    var eggCols = [["#f7b6d2","#fff"],["#b9e3ff","#ffd23f"],["#c8f2b4","#ff8fb1"],["#ffe08a","#7bc8ff"],["#d8c4ff","#fff"],["#ffc9a8","#36d67e"]];
+    var eggs = [[60,1330],[45,1235],[80,905],[62,705],[44,610],[72,420],[362,1000],[352,830],[338,700],[380,520],[345,360],[180,1150],[245,1130],[170,620],[205,430],[250,1592],[120,1585],[365,1585]];
+    var lay = document.getElementById("signs");
+    eggs.forEach(function(p, i){ var c = eggCols[i % eggCols.length], rot = (i*23 % 50) - 25;
+      lay.insertAdjacentHTML("beforebegin", '<g aria-hidden="true" transform="translate('+p[0]+','+p[1]+') rotate('+rot+') scale(1.8)"><ellipse cx="0" cy="-4.5" rx="3.6" ry="4.8" fill="'+c[0]+'" stroke="rgba(0,0,0,.18)" stroke-width=".4"/><path d="M-3.5 -5 q1.75 -1.6 3.5 0 t3.5 0" fill="none" stroke="'+c[1]+'" stroke-width="1"/><circle cx="-1.2" cy="-2" r=".7" fill="'+c[1]+'"/><circle cx="1.4" cy="-2.2" r=".7" fill="'+c[1]+'"/></g>'); });
+    function bunny(x, y, flip){
+      return '<g aria-hidden="true" transform="translate('+x+','+y+') scale('+(flip?-1.6:1.6)+',1.6)"><g class="bunnyHop">' +
+        '<ellipse cx="0" cy="-6" rx="7" ry="5.5" fill="#f4f1ec" stroke="#cfc8bd" stroke-width=".5"/><circle cx="6.6" cy="-6.5" r="2.2" fill="#fff" stroke="#cfc8bd" stroke-width=".4"/>' +
+        '<circle cx="-6" cy="-11" r="4" fill="#f4f1ec" stroke="#cfc8bd" stroke-width=".5"/>' +
+        '<ellipse cx="-7.5" cy="-19" rx="1.5" ry="5" transform="rotate(-12 -7.5 -19)" fill="#f4f1ec" stroke="#cfc8bd" stroke-width=".5"/><ellipse cx="-7.5" cy="-19" rx=".7" ry="3.6" transform="rotate(-12 -7.5 -19)" fill="#f7b6d2"/>' +
+        '<ellipse cx="-4.6" cy="-19.5" rx="1.5" ry="5" transform="rotate(10 -4.6 -19.5)" fill="#f4f1ec" stroke="#cfc8bd" stroke-width=".5"/><ellipse cx="-4.6" cy="-19.5" rx=".7" ry="3.6" transform="rotate(10 -4.6 -19.5)" fill="#f7b6d2"/>' +
+        '<circle cx="-7.6" cy="-11.6" r=".7" fill="#2b2b2b"/><circle cx="-9.8" cy="-10.4" r=".7" fill="#f28aa8"/><ellipse cx="2" cy="-1" rx="4" ry="1.4" fill="#e8e2d8"/></g></g>';
+    }
+    lay.insertAdjacentHTML("beforebegin", bunny(130, 1598, false) + bunny(58, 790, false) + bunny(318, 252, true));
+  }
   // coffees
   var lampObjs = LAMPS.map(function(L){
     var e = byId[L[0]], p = pt(e, L[1]*e.len);
@@ -637,8 +686,8 @@ fieldset.fRow{border:0;padding:0;min-width:0}
     if (!h || sheet.classList.contains("open")) return false;
     var e = st.edge, atEnd = st.pos >= e.len - .01, outs = out[e.to] || [];
     if (atEnd && outs.length > 1){
-      if (h === "left"){ st.choice = "left1"; }
-      else if (h === "right"){ st.choice = "r1"; }
+      if (!st.choice && h === "left"){ st.choice = "left1"; st.returning = false; }
+      else if (!st.choice && h === "right"){ st.choice = "r1"; }
       if (st.choice){ enter(byId[st.choice]); quiet(); }
       else if (h === "up"){ st.auto = false; say("Choose a road: left or right", 1800); return false; }
     }
@@ -735,7 +784,7 @@ fieldset.fRow{border:0;padding:0;min-width:0}
     return '<p>' + intro + '</p><div class="goals">' + first.map(function(k){ return goal(k, k === "groups" ? gIcon : tIcon); }).join("") + '</div>';
   }
   function bindGoals(){
-    card.querySelectorAll("[data-int]").forEach(function(c){ c.onchange = function(){ st.interest[c.getAttribute("data-int")] = c.checked; }; });
+    card.querySelectorAll("[data-int]").forEach(function(c){ c.onchange = function(){ st.interest[c.getAttribute("data-int")] = c.checked; refreshRows(); }; });
   }
   function moreSteps(){
     if (st.route === "discover") return '<h3 class="more">Other next steps</h3>' + stepLinks(["visit"]);
@@ -769,13 +818,17 @@ fieldset.fRow{border:0;padding:0;min-width:0}
     var rows = [];
     if (st.route) rows.push(["Road", roadLabel()]);
     ALLQ.forEach(function(k){ if (st.answers[k]) rows.push([QUESTIONS[k].label, st.answers[k]]); });
+    var il = interestList(); if (il.length) rows.unshift(["Interested in", il.join(", ")]);
     return rows;
   }
+  function interestList(){ return ["discover","chat","groups","team"].filter(function(k){ return st.interest[k]; }).map(function(k){ return STEPS[k].t; }); }
+  function rowsHtml(){ return rowsNow().map(function(r){ return '<dt>'+esc(r[0])+'</dt><dd>'+esc(r[1])+'</dd>'; }).join(""); }
+  function refreshRows(){ var dl = document.getElementById("sumDl"); if (dl){ dl.innerHTML = rowsHtml(); dl.hidden = !dl.innerHTML; } }
   function sendBlock(){
     var rows = rowsNow();
     return '<form class="send" id="helloForm" novalidate><strong>Let’s get you connected</strong>' +
       '<p>Leave your details and someone from our welcome team will help you take the next step.' + (rows.length ? ' Your answers from the walk come too.' : '') + '</p>' +
-      (rows.length ? '<dl>' + rows.map(function(r){ return '<dt>'+esc(r[0])+'</dt><dd>'+esc(r[1])+'</dd>'; }).join("") + '</dl>' : '') +
+      '<dl id="sumDl"' + (rows.length ? '' : ' hidden') + '>' + rowsHtml() + '</dl>' +
       '<label class="fld"><span>Your name</span><input id="fName" autocomplete="name" required></label>' +
       '<label class="fld"><span>Email</span><input id="fEmail" type="email" autocomplete="email" inputmode="email"></label>' +
       '<label class="fld"><span>Phone <small>(optional)</small></span><input id="fPhone" type="tel" autocomplete="tel" inputmode="tel"></label>' +
@@ -855,13 +908,16 @@ fieldset.fRow{border:0;padding:0;min-width:0}
       release();
       openSheet('<p class="kicker">Discover</p><h2>Explore Jesus, no strings attached</h2><p>Discover is our course for exploring Christianity. We sit at tables, share dessert and talk through the big questions. Come with your doubts and curiosity. No background needed.</p>' +
         '<p class="note"><strong>Next course: Term 1, 2027.</strong></p>' +
-        '<label class="goalPick"><input type="checkbox" data-int="discover"' + (st.interest.discover ? ' checked' : '') + '><span>Let me know when it starts</span></label>' +
+        '<label class="goalPick"><input type="checkbox" data-int="discover"' + (st.interest.discover ? ' checked' : '') + '><span>I’d like to come to Discover</span></label>' +
         stepLinks(["discover"]) + '<div class="opts"><button class="btn" id="infoClose">Back to the walk</button></div>');
       bindGoals(); bind("infoClose", function(){ closeSheet(); });
     } else if (name === "discover"){
       openSheet('<h2>Welcome to Discover</h2><p>Discover is our course for exploring Christianity. Come with your questions, doubts and curiosity. No background needed.</p>' +
-        '<p class="note"><strong>Next course: Term 1, 2027.</strong> Leave your details at the end and we’ll let you know when it starts.</p>' +
+        '<p class="note"><strong>Next course: Term 1, 2027.</strong></p>' +
+        '<label class="goalPick"><input type="checkbox" data-int="discover"' + (st.interest.discover ? ' checked' : '') + '><span>I’d like to come to Discover</span></label>' +
+        '<p class="fine">Tick this and leave your details at the end, and we’ll save you a seat.</p>' +
         stepLinks(["discover"]) + '<div class="opts"><button class="btn" id="on">Keep walking</button></div>');
+      bindGoals();
       bind("on", function(){ closeSheet(); goAuto(); say("One more signpost ahead", 1800); });
     } else if (name === "groups"){
       openSheet('<p class="kicker">You made it</p><h2>' + (st.route === "discover" ? 'Your next step' : st.returning ? 'Welcome home' : 'Grow in Jesus, together') + '</h2>' + coupon(true) + belongBlock() +
