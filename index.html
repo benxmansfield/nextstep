@@ -107,9 +107,9 @@ body.carding .skipBtm, body.overlay .skipBtm{display:none}
 .coachX{position:absolute;top:4px;right:4px;width:36px;height:36px;border:0;background:transparent;color:var(--muted);font-size:24px;line-height:1;cursor:pointer;border-radius:10px}
 .coach.hide{opacity:0;transform:translateY(-8px);pointer-events:none}
 body.carding .coach{display:none}
-.pad .u.pulse{animation:padpulse 1.3s ease-in-out infinite}
+.pad button.pulse{animation:padpulse 1.3s ease-in-out infinite}
 @keyframes padpulse{50%{transform:scale(1.12);box-shadow:0 0 0 6px color-mix(in srgb, var(--accent) 30%, transparent)}}
-@media (prefers-reduced-motion: reduce){.pad .u.pulse{animation:none}}
+@media (prefers-reduced-motion: reduce){.pad button.pulse{animation:none}}
 .pad{position:fixed;right:max(16px, calc(50% - 264px));bottom:calc(env(safe-area-inset-bottom,0px) + 16px);z-index:25;display:grid;grid-template-columns:repeat(3,58px);grid-template-rows:repeat(3,58px);gap:4px;touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
 .pad button{appearance:none;border:2px solid var(--line);background:var(--card);color:var(--brand);border-radius:16px;display:grid;place-items:center;cursor:pointer;box-shadow:0 4px 14px rgba(10,20,30,.16);touch-action:none}
 .pad button svg{width:26px;height:26px}
@@ -133,10 +133,12 @@ body.carding .pad{opacity:0;pointer-events:none}
 .step span{color:var(--muted);font-size:15px;display:block}
 .step em{font-style:normal;font-weight:600;color:var(--accent);font-size:15px;display:inline-block;margin-top:6px;text-decoration:underline;text-underline-offset:3px}
 .verse{font-family:"Young Serif",Georgia,serif;font-size:15px;color:var(--muted);border-top:1px solid var(--line);padding-top:12px;margin-top:4px}
-.coupon.big{border-style:solid;border-width:3px;background:color-mix(in srgb, var(--brand2) 22%, var(--card));margin-bottom:16px}
-.coupon.big strong{font-size:23px}
+.coupon.big{border-style:solid;border-width:2px;background:color-mix(in srgb, var(--brand2) 22%, var(--card));margin-bottom:14px;padding:10px 14px}
+.coupon.big strong{font-size:19px}
+.coupon.big span{font-size:14px;line-height:1.35}
+.coupon.big svg{width:32px;height:32px}
 .countLbl{font-weight:600;font-size:14px}
-.coach .key.cup{background:var(--brand2);color:#14264a;font-size:14px;letter-spacing:0}
+.coach .coachCoffee{margin:2px 0 10px;padding:7px 10px;border-radius:10px;background:var(--brand2);color:#14264a;font-weight:700;font-size:14px;line-height:1.3;text-wrap:balance}
 .coupon{display:flex;gap:12px;align-items:center;border:2px dashed var(--brand2);background:var(--soft);border-radius:16px;padding:14px 16px;margin:0 0 12px}
 .coupon svg{width:40px;height:40px;flex:none;color:var(--accent)}
 .coupon strong{display:block;font-family:"Young Serif",Georgia,serif;font-weight:400;font-size:20px;line-height:1.2;margin-bottom:2px}
@@ -175,6 +177,17 @@ body.carding .pad{opacity:0;pointer-events:none}
 .goal a{color:var(--accent);font-weight:600;font-size:14px;text-underline-offset:3px}
 .goalPick{display:flex;align-items:center;gap:10px;min-height:44px;padding:6px 12px;border-radius:12px;background:var(--card);border:1px solid var(--line);cursor:pointer;font-weight:700}
 .goalPick input{width:20px;height:20px;accent-color:var(--brand);margin:0}
+fieldset.pickRow{border:0;padding:0;min-width:0}
+.sumWrap{margin:0 0 12px;font-size:14px}
+.sumWrap summary{cursor:pointer;color:var(--accent);font-weight:600;padding:6px 0}
+.sumWrap summary small{color:var(--muted);font-weight:400}
+.sumWrap dl{margin:6px 0 0}
+.pickRow .goalPick span{display:inline;margin:0;font-weight:700}
+.picks{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 4px}
+.picks .goalPick{min-height:40px!important;padding:6px 14px 6px 10px;border-radius:999px;font-size:15px;border-color:var(--accent)}
+.pickLinks{margin:0!important;font-size:13px}
+.pickLinks a{color:var(--accent);font-weight:600;text-underline-offset:3px}
+.pickLinks:empty{display:none}
 .more{font-family:"Young Serif",Georgia,serif;font-weight:400;font-size:19px;margin:18px 0 8px}
 .hpot{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
 .consent{display:flex;gap:10px;align-items:flex-start;margin:4px 0 12px;font-size:14px;line-height:1.4;cursor:pointer}
@@ -286,7 +299,7 @@ fieldset.fRow{border:0;padding:0;min-width:0}
     <svg class="pillLogo" viewBox="120 88 236 282" aria-hidden="true"><path fill="#575a70" d="M127 148 L238 94 L238 153 L170 186 L170 206 L238 173 L238 232 L127 286Z M127 305 L238 251 L238 310 L127 364Z"/><path fill="#1b2a47" d="M238 94 L350 148 L350 207 L238 153Z M238 173 L350 227 L350 364 L238 310 L238 251 L306 284 L306 264 L238 232Z"/></svg><span class="brand">Southside Presbyterian</span>
     <span class="count" id="count" aria-live="polite">
       <svg viewBox="0 0 20 20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h11v4a5 5 0 0 1-5 5H8a5 5 0 0 1-5-5z"/><path d="M14 9h1.5a2 2 0 0 1 0 4H14"/><path d="M7 2.5c-.8 1 .8 2 0 3M10.5 2.5c-.8 1 .8 2 0 3"/></svg>
-      <span id="countNum">0</span><span class="countLbl"> coffees</span>
+      <span id="countNum">0</span><span class="countLbl" id="countLbl"> of 8</span>
     </span>
   </div>
   <div class="hint" id="hint" role="status"></div>
@@ -400,7 +413,7 @@ fieldset.fRow{border:0;padding:0;min-width:0}
     <rect x="-64" y="-80" width="4" height="80" fill="#f4f2ee"/><rect x="60" y="-80" width="4" height="80" fill="#f4f2ee"/>
   </g>
   <!-- Southside Presbyterian Church (drawn from the building photo; front door under the cross) -->
-  <g aria-hidden="true" transform="translate(200,1522)">
+  <g aria-hidden="true" class="church" transform="translate(200,1522)">
     <ellipse class="spill" cx="0" cy="4" rx="34" ry="9"/>
     <rect class="ground" x="-126" y="-2" width="202" height="6" rx="2"/>
     <rect class="fascia" x="-122" y="-78" width="194" height="14"/>
@@ -472,11 +485,10 @@ fieldset.fRow{border:0;padding:0;min-width:0}
 <div class="coach" id="coach" role="region" aria-label="How to walk">
   <button class="coachX" id="coachX" type="button" aria-label="Hide these tips">&times;</button>
   <strong>Welcome to Southside!</strong>
-  <p>Your journey starts at the front door.</p>
+  <p class="coachCoffee"><span aria-hidden="true">&#9749;</span> Collect 8 coffees for a free one!</p>
   <ul>
-    <li><span class="key">&#9650;&#9660;</span> Hold to walk or go back</li>
+    <li><span class="key">&#9650;</span> Tap to walk to the next stop</li>
     <li><span class="key">&#9664;&#9654;</span> Pick a road at the fork</li>
-    <li><span class="key cup">&#9749;</span> Collect coffees. Reach the end for a free one!</li>
   </ul>
   <p class="coachSkip">In a hurry? Tap <b>Skip</b>.</p>
 </div>
@@ -516,7 +528,7 @@ fieldset.fRow{border:0;padding:0;min-width:0}
     {id:"r5", from:"Q4", to:"G", d:"M290 520 V300 L200 210"}
   ];
   var FORK_AT = 330; // (reset to the fork below) distance along the first road where the "Where are you with Jesus?" question appears
-  var LAMPS = [["trunk",.3],["trunk",.62],["trunk",.88],["left1",.5],["left1",.85],["left2",.5],["left3",.35],["left3",.75],["r1",.75],["r2",.5],["r3",.5],["r4",.5],["r5",.55]];
+  var LAMPS = [["trunk",.36],["trunk",.62],["trunk",.88],["left1",.5],["left1",.85],["left2",.5],["left3",.35],["left3",.75],["r1",.75],["r2",.5],["r3",.5],["r4",.5],["r5",.55]];
   // [x, y, text] signposts
   var SIGNS = [[60,1290,"Curious?"],[352,1290,"Know Jesus?"],[52,1030,"Discover"],[46,670,"Why here?"],
     [222,1080,"How long?"],[222,900,"Looking for?"],[222,720,"New here?"],[222,540,"Life stage?"],[200,345,"Grow together"]];
@@ -595,19 +607,40 @@ fieldset.fRow{border:0;padding:0;min-width:0}
   }
   var THEME = currentTheme();
   if (THEME === "christmas"){
-    var cols = ["#ff4b4b","#ffd23f","#36d67e","#3fa2ff","#fff4c2"], spots = [[-9,-22],[-2,-27],[6,-23],[10,-14],[-12,-10],[-4,-14],[3,-8],[12,-5],[-8,-3],[0,-19]];
+    var cols = ["#ff4b4b","#ffd23f","#36d67e","#3fa2ff","#fff4c2"], spots = [[-9,-22],[-2,-27],[6,-23],[10,-14],[-12,-10],[-4,-14],[3,-8],[11,-4],[-8,-3],[0,-19]];
     TREE_G.forEach(function(g, ti){
+      g.querySelectorAll("circle.tree").forEach(function(c){ c.remove(); });
+      g.querySelector(".trunk").insertAdjacentHTML("afterend", '<path class="tree" d="M-18 4 L0 -20 L18 4Z M-15 -8 L0 -30 L15 -8Z M-12 -20 L0 -38 L12 -20Z"/>');
       spots.forEach(function(s, si){ var c = document.createElementNS(ns,"circle"); c.setAttribute("cx", s[0]); c.setAttribute("cy", s[1]); c.setAttribute("r", 1.5);
         c.setAttribute("class","xlight"); c.setAttribute("fill", cols[(si+ti)%cols.length]); c.style.animationDelay = ((si*0.37+ti*0.21)%1.6).toFixed(2)+"s"; g.appendChild(c); });
       g.insertAdjacentHTML("beforeend", '<path d="M0 -36 l1.6 3.4 3.7 .4 -2.8 2.5 .8 3.7 -3.3 -1.9 -3.3 1.9 .8 -3.7 -2.8 -2.5 3.7 -.4z" fill="#ffd23f"/>');
     });
     var gath = document.querySelector(".gathering");
     if (gath){
-      var gl = ""; for (var i = 0; i < 26; i++){ var a = i/26*Math.PI*2, r = 18 + (i%3)*8; gl += '<circle class="xlight" r="2" cx="'+(Math.cos(a)*r*1.3).toFixed(1)+'" cy="'+(-74+Math.sin(a)*r*.9).toFixed(1)+'" fill="'+cols[i%cols.length]+'" style="animation-delay:'+(i*0.13%1.6).toFixed(2)+'s"/>'; }
+      gath.querySelectorAll("circle.tree").forEach(function(c){ c.remove(); });
+      gath.querySelector(".trunk").insertAdjacentHTML("afterend", '<path class="tree" d="M-50 -40 L0 -92 L50 -40Z M-38 -64 L0 -110 L38 -64Z M-26 -88 L0 -125 L26 -88Z"/>');
+      var gl = "", n = 0; [[-100,17],[-84,21],[-68,34],[-54,36],[-44,45]].forEach(function(row){
+        for (var j = 0; j < 7; j++){ var x = -row[1]*.8 + j*row[1]*1.6/6, y = row[0] + 3*Math.sin(j/6*Math.PI);
+          gl += '<circle class="xlight" r="2" cx="'+x.toFixed(1)+'" cy="'+y.toFixed(1)+'" fill="'+cols[n%cols.length]+'" style="animation-delay:'+(n*0.13%1.6).toFixed(2)+'s"/>'; n++; } });
       gl += '<path d="M0 -122 l3 6.4 7 .7 -5.3 4.7 1.5 6.9 -6.2 -3.6 -6.2 3.6 1.5 -6.9 -5.3 -4.7 7 -.7z" fill="#ffd23f" stroke="#e0a447" stroke-width=".6"/>';
       gl += '<rect x="-30" y="-14" width="10" height="9" fill="#d9283b"/><path d="M-25 -14v9M-30 -10h10" stroke="#ffd23f" stroke-width="1.4"/><rect x="18" y="-13" width="9" height="8" fill="#2f6bd1"/><path d="M22.5 -13v8M18 -9h9" stroke="#fff" stroke-width="1.3"/>';
       gath.insertAdjacentHTML("beforeend", gl);
     }
+    // fairy lights along the church roofline and under the fascia
+    var church = document.querySelector(".church");
+    if (church){
+      var cl = "";
+      [-78, -64].forEach(function(y, li){
+        var wire = "M-122 " + y;
+        for (var k = 0; k < 16; k++){ var x = -122 + k*12.125;
+          wire += " Q" + (x+6.06).toFixed(1) + " " + (y+5) + " " + (x+12.125).toFixed(1) + " " + y;
+          cl += '<circle class="xlight" r="1.7" cx="' + (x+6.06).toFixed(1) + '" cy="' + (y+2.6) + '" fill="' + cols[(k+li*2)%cols.length] + '" style="animation-delay:' + ((k*0.29+li*0.5)%1.6).toFixed(2) + 's"/>'; }
+        cl = '<path d="' + wire + '" fill="none" stroke="#2b3038" stroke-width=".5"/>' + cl;
+      });
+      church.insertAdjacentHTML("beforeend", cl);
+    }
+    // Santa hat on the walker (inside #face, so it flips with them)
+    document.getElementById("face").insertAdjacentHTML("beforeend", '<path d="M-6.8 -37.6 Q-5 -46.5 2.5 -48.4 Q6.5 -49 8.4 -44.2 Q5.6 -45.6 3.6 -45 Q4.8 -41.4 6.8 -37.6Z" fill="#d9283b"/><rect x="-7.8" y="-39.8" width="15.6" height="3.8" rx="1.9" fill="#fff"/><circle cx="8.4" cy="-43.8" r="2.1" fill="#fff"/>');
   } else if (THEME === "easter"){
     var eggCols = [["#f7b6d2","#fff"],["#b9e3ff","#ffd23f"],["#c8f2b4","#ff8fb1"],["#ffe08a","#7bc8ff"],["#d8c4ff","#fff"],["#ffc9a8","#36d67e"]];
     var eggs = [[60,1330],[45,1235],[80,905],[62,705],[44,610],[72,420],[362,1000],[352,830],[338,700],[380,520],[345,360],[180,1150],[245,1130],[170,620],[205,430],[250,1592],[120,1585],[365,1585]];
@@ -635,6 +668,20 @@ fieldset.fRow{border:0;padding:0;min-width:0}
   });
 
   FORK_AT = byId.trunk.len - 1; // pop the "Where are you with Jesus?" card right at the fork
+  // a tap stops at every bend in the road; the arrow for the new direction takes you round it
+  EDGES.forEach(function(e){
+    var pts = [], x = 0, y = 0, m, re = /([MLHV])\s*(-?[\d.]+)(?:\s+(-?[\d.]+))?/g;
+    while ((m = re.exec(e.d))){ if (m[1] === "H") x = +m[2]; else if (m[1] === "V") y = +m[2]; else { x = +m[2]; y = +m[3]; } pts.push([x, y]); }
+    e.stops = []; var along = 0;
+    for (var i = 1; i < pts.length - 1; i++){
+      var ax = pts[i][0]-pts[i-1][0], ay = pts[i][1]-pts[i-1][1], bx = pts[i+1][0]-pts[i][0], by = pts[i+1][1]-pts[i][1];
+      along += Math.hypot(ax, ay);
+      var turn = Math.abs(Math.atan2(ax*by - ay*bx, ax*bx + ay*by)) * 180 / Math.PI;
+      if (turn < 35) continue; // ignore gentle kinks
+      var dir = Math.abs(bx) > Math.abs(by) * .5 ? (bx < 0 ? "left" : "right") : "up";
+      e.stops.push({at: along, dir: dir});
+    }
+  });
   var upBtn = document.querySelector(".pad .u");
   var walker = document.getElementById("walker"), bob = document.getElementById("bob"), face = document.getElementById("face"),
       svg = document.getElementById("scene"), sheet = document.getElementById("sheet"), card = document.getElementById("card"),
@@ -645,7 +692,7 @@ fieldset.fRow{border:0;padding:0;min-width:0}
     st = {auto:false, interest:{}, choice:null, edge:byId.trunk, pos:0, stack:[], route:null, visited:{}, answers:{}, lamps:0, held:null, lastX:200, t:0};
     lampObjs.forEach(function(l){ l.got = false; l.el.classList.remove("got"); });
     EDGES.forEach(function(e){ e.best = 0; paintWalked(e); });
-    countNum.textContent = "0";
+    countNum.textContent = "0"; document.getElementById("countLbl").hidden = false;
   }
 
   function draw(moving){
@@ -659,7 +706,8 @@ fieldset.fRow{border:0;padding:0;min-width:0}
       if (!l.got && Math.hypot(l.x-p.x, l.y-p.y) < 16){
         l.got = true; l.el.classList.add("got"); st.lamps++;
         countNum.textContent = st.lamps; countEl.classList.remove("bump"); void countEl.offsetWidth; countEl.classList.add("bump");
-        say(st.lamps === 1 ? "☕ You found a coffee! Collect them all the way to a free coffee at the end" : "☕ +1 coffee (" + st.lamps + " collected)", st.lamps === 1 ? 3200 : 1400);
+        document.getElementById("countLbl").hidden = st.lamps > 8;
+        say(st.lamps === 1 ? "☕ 1 of 8! Collect 8 for a free coffee" : st.lamps === 8 ? "☕ All 8! Your free coffee is waiting at the end" : "☕ " + st.lamps + (st.lamps < 8 ? " of 8" : " coffees"), st.lamps === 1 || st.lamps === 8 ? 2800 : 1400);
       }
     });
     return p;
@@ -693,7 +741,13 @@ fieldset.fRow{border:0;padding:0;min-width:0}
     }
     e = st.edge;
     var sgn = h === "down" ? -1 : 1;
+    var before = st.pos;
     st.pos += sgn * SPEED * dt;
+    if (sgn > 0 && st.auto && !st.held && e.stops){
+      for (var si = 0; si < e.stops.length; si++){ var sp = e.stops[si]; if (before < sp.at && st.pos >= sp.at){
+        st.pos = sp.at; st.auto = false; st.nextDir = sp.dir; idlePulse(0);
+        say(sp.dir === "left" ? "Turn left: tap ◀" : sp.dir === "right" ? "Turn right: tap ▶" : "Head up the road: tap ▲", 2200); return true; } }
+    }
     if (sgn > 0) st.walked = (st.walked || 0) + SPEED * dt; if (st.walked > 90 && !coach.classList.contains("hide")) hideCoach();
     if (e.id === "trunk" && st.pos >= FORK_AT && !st.visited.forkCard){ st.visited.forkCard = true; st.pos = FORK_AT; st.auto = false; st.lock = true; release(); station("fork"); return true; }
     if (st.pos > e.len){
@@ -721,8 +775,8 @@ fieldset.fRow{border:0;padding:0;min-width:0}
   }
 
   // controls
-  function goAuto(){ upBtn.classList.remove("pulse"); }
-  function press(d){ if (st.lock) return; if (d === "down") st.auto = false;  st.held = d; document.querySelectorAll(".pad button").forEach(function(b){ b.classList.toggle("held", b.getAttribute("data-dir") === d); }); }
+  function goAuto(){ clearPulse(); idlePulse(); }
+  function press(d){ if (st.lock) return; st.auto = d !== "down"; st.held = d; st.nextDir = null; clearPulse(); document.querySelectorAll(".pad button").forEach(function(b){ b.classList.toggle("held", b.getAttribute("data-dir") === d); }); }
   function release(){ st.held = null; if (!st.auto && !sheet.classList.contains("open")) idlePulse(); document.querySelectorAll(".pad button.held").forEach(function(b){ b.classList.remove("held"); }); }
   document.querySelectorAll(".pad button").forEach(function(b){
     var d = b.getAttribute("data-dir");
@@ -732,7 +786,8 @@ fieldset.fRow{border:0;padding:0;min-width:0}
     b.addEventListener("keydown", function(ev){ if (ev.key === " " || ev.key === "Enter"){ ev.preventDefault(); press(d); } });
     b.addEventListener("keyup", function(ev){ if (ev.key === " " || ev.key === "Enter") release(); });
   });
-  function idlePulse(){ clearTimeout(st.pulseT); st.pulseT = setTimeout(function(){ if (!st.auto && !st.held && !sheet.classList.contains("open")) upBtn.classList.add("pulse"); }, 2500); }
+  function clearPulse(){ document.querySelectorAll(".pad button.pulse").forEach(function(b){ b.classList.remove("pulse"); }); }
+  function idlePulse(wait){ clearTimeout(st.pulseT); st.pulseT = setTimeout(function(){ if (!st.auto && !st.held && !sheet.classList.contains("open")) document.querySelector('.pad [data-dir="' + (st.nextDir || "up") + '"]').classList.add("pulse"); }, wait === undefined ? 2500 : wait); }
   var KEYS = {ArrowUp:"up",ArrowDown:"down",ArrowLeft:"left",ArrowRight:"right",w:"up",s:"down",a:"left",d:"right",W:"up",S:"down",A:"left",D:"right"};
   window.addEventListener("keydown", function(ev){ if (sheet.classList.contains("open") || document.body.classList.contains("overlay")) return; var d = KEYS[ev.key]; if (d){ ev.preventDefault(); if (ev.repeat && !st.held) return; press(d); } });
   window.addEventListener("pointerup", function(){ st.lock = false; });
@@ -756,12 +811,12 @@ fieldset.fRow{border:0;padding:0;min-width:0}
   var cupSvg = '<svg viewBox="0 0 20 20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h11v4a5 5 0 0 1-5 5H8a5 5 0 0 1-5-5z"/><path d="M14 9h1.5a2 2 0 0 1 0 4H14"/><path d="M7 2.5c-.8 1 .8 2 0 3M10.5 2.5c-.8 1 .8 2 0 3"/></svg>';
   function coupon(big){ var n = st.lamps;
     return '<div class="coupon' + (big ? ' big' : '') + '" role="group" aria-label="Free coffee voucher">' + cupSvg + '<div><strong>' + (big ? 'Free coffee unlocked!' : 'Your first coffee is on us') + '</strong><span>' +
-      (n ? 'You collected ' + n + (n === 1 ? ' coffee' : ' coffees') + ' on the walk. ' : '') +
-      'Show this screen at the welcome desk on Sunday and your coffee is on us.</span></div></div>'; }
+      (big ? (n ? n + (n === 1 ? ' coffee' : ' coffees') + ' collected. ' : '') + 'Show this screen at the welcome desk on Sunday.'
+        : (n ? 'You collected ' + n + (n === 1 ? ' coffee' : ' coffees') + ' on the walk. ' : '') + 'Show this screen at the welcome desk on Sunday and your coffee is on us.') + '</span></div></div>'; }
 
   // Next steps picked from the answers
   // The goal is community and growth in Jesus: two equal ways in, plus supporting steps
-  function belongBlock(){
+  function belongBlock(compact){
     var a = st.answers;
     var explorer = st.route === "discover";
     var intro = explorer
@@ -778,10 +833,13 @@ fieldset.fRow{border:0;padding:0;min-width:0}
     var tIcon = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20s-7-4.3-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.7-7 10-7 10z"/></svg>';
     var dIcon = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z"/><path d="M4 20.5A2.5 2.5 0 0 0 6.5 23H20v-5"/></svg>';
     var cIcon = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20.5l1.4-4.9A8 8 0 1 1 21 12z"/></svg>';
-    if (explorer) return '<p>' + intro + '</p><div class="goals">' + goal("discover", dIcon) + goal("chat", cIcon) + '</div>';
-    if (st.returning) return '<p>' + intro + '</p><div class="goals">' + goal("chat", cIcon) + goal("groups", gIcon) + '</div>';
-    var first = (a.looking === "A place to serve") ? ["team","groups"] : ["groups","team"];
-    return '<p>' + intro + '</p><div class="goals">' + first.map(function(k){ return goal(k, k === "groups" ? gIcon : tIcon); }).join("") + '</div>';
+    var keys = explorer ? ["discover","chat"] : st.returning ? ["chat","groups"] : (a.looking === "A place to serve") ? ["team","groups"] : ["groups","team"];
+    // end of the walk: small tick chips, so the send form below is what stands out
+    if (compact) return '<fieldset class="fld pickRow"><span>I’d like to… <small>(tick any)</small></span><div class="picks">' +
+      keys.map(function(k){ var s = STEPS[k]; return '<label class="goalPick"><input type="checkbox" data-int="' + k + '"' + (st.interest[k] ? ' checked' : '') + '><span>' + esc(s.pick || s.t) + '</span></label>'; }).join("") + '</div>' +
+      '<p class="pickLinks">' + keys.filter(function(k){ return STEPS[k].url; }).map(function(k){ return '<a href="' + esc(STEPS[k].url) + '" target="_blank" rel="noopener">' + esc(STEPS[k].cta) + '</a>'; }).join(" · ") + '</p></fieldset>';
+    var icons = {discover:dIcon, chat:cIcon, groups:gIcon, team:tIcon};
+    return '<p>' + intro + '</p><div class="goals">' + keys.map(function(k){ return goal(k, icons[k]); }).join("") + '</div>';
   }
   function bindGoals(){
     card.querySelectorAll("[data-int]").forEach(function(c){ c.onchange = function(){ st.interest[c.getAttribute("data-int")] = c.checked; refreshRows(); }; });
@@ -823,16 +881,16 @@ fieldset.fRow{border:0;padding:0;min-width:0}
   }
   function interestList(){ return ["discover","chat","groups","team"].filter(function(k){ return st.interest[k]; }).map(function(k){ return STEPS[k].t; }); }
   function rowsHtml(){ return rowsNow().map(function(r){ return '<dt>'+esc(r[0])+'</dt><dd>'+esc(r[1])+'</dd>'; }).join(""); }
-  function refreshRows(){ var dl = document.getElementById("sumDl"); if (dl){ dl.innerHTML = rowsHtml(); dl.hidden = !dl.innerHTML; } }
-  function sendBlock(){
+  function refreshRows(){ var dl = document.getElementById("sumDl"); if (dl){ dl.innerHTML = rowsHtml(); document.getElementById("sumWrap").hidden = !dl.innerHTML; } }
+  function sendBlock(picks){
     var rows = rowsNow();
-    return '<form class="send" id="helloForm" novalidate><strong>Let’s get you connected</strong>' +
-      '<p>Leave your details and someone from our welcome team will help you take the next step.' + (rows.length ? ' Your answers from the walk come too.' : '') + '</p>' +
-      '<dl id="sumDl"' + (rows.length ? '' : ' hidden') + '>' + rowsHtml() + '</dl>' +
+    return '<form class="send" id="helloForm" novalidate><p class="kicker">Last step</p><strong>Let’s get you connected</strong>' +
+      '<p>Leave your details and someone from our welcome team will help you take the next step.</p>' + (picks || '') +
       '<label class="fld"><span>Your name</span><input id="fName" autocomplete="name" required></label>' +
       '<label class="fld"><span>Email</span><input id="fEmail" type="email" autocomplete="email" inputmode="email"></label>' +
       '<label class="fld"><span>Phone <small>(optional)</small></span><input id="fPhone" type="tel" autocomplete="tel" inputmode="tel"></label>' +
       '<label class="fld"><span>Anything you’d like us to know? <small>(optional)</small></span><textarea id="fMsg" rows="3"></textarea></label>' +
+      '<details class="sumWrap" id="sumWrap"' + (rows.length ? '' : ' hidden') + '><summary>Your answers from the walk <small>(sent with your details)</small></summary><dl id="sumDl">' + rowsHtml() + '</dl></details>' +
       '<p class="ferr" id="fErr" role="alert"></p>' +
       '<div class="hpot" aria-hidden="true"><label>Leave this empty<input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>' +
       '<label class="consent"><input type="checkbox" id="fOk"><span>I’m happy for Southside to contact me about my next step. My details stay with our church team and won’t be shared.</span></label>' +
@@ -920,8 +978,8 @@ fieldset.fRow{border:0;padding:0;min-width:0}
       bindGoals();
       bind("on", function(){ closeSheet(); goAuto(); say("One more signpost ahead", 1800); });
     } else if (name === "groups"){
-      openSheet('<p class="kicker">You made it</p><h2>' + (st.route === "discover" ? 'Your next step' : st.returning ? 'Welcome home' : 'Grow in Jesus, together') + '</h2>' + coupon(true) + belongBlock() +
-        kidsNote() + sendBlock() + moreSteps() + finalFoot());
+      openSheet('<p class="kicker">You made it</p><h2>' + (st.route === "discover" ? 'Your next step' : st.returning ? 'Welcome home' : 'Grow in Jesus, together') + '</h2>' + coupon(true) +
+        kidsNote() + sendBlock(belongBlock(true)) + moreSteps() + finalFoot());
       bindFinal(); bindGoals();
     }
   }
@@ -929,19 +987,19 @@ fieldset.fRow{border:0;padding:0;min-width:0}
   function discoverInfo(){ if (!document.body.classList.contains("overlay")) station("discoverInfo"); }
   document.querySelector(".hallLink").addEventListener("click", discoverInfo);
   function intro(){
-    openSheet('<h2>Welcome to Southside</h2><p>You’re at church, and this is where the journey starts. Hold the up arrow (or your keyboard’s up key) to walk. Collect coffees along the way and choose the road that fits you.</p>' +
+    openSheet('<h2>Welcome to Southside</h2><p>You’re at church, and this is where the journey starts. Tap the up arrow (or your keyboard’s up key) to walk to the next stop. Collect 8 coffees along the way for a free one and choose the road that fits you.</p>' +
       '<div class="opts"><button class="btn" id="go">Start walking</button></div>' +
       '<div class="foot"><button class="link" id="skip">Skip to next steps</button></div>');
-    bind("go", function(){ closeSheet(); say("Hold the up arrow to walk", 2600); });
+    bind("go", function(){ closeSheet(); say("Tap the up arrow to walk", 2600); });
     bind("skip", function(){
       openSheet('<h2>Your next steps</h2><p>Everything in one place. Pick whichever feels right.</p>' +
         stepLinks(["visit","discover","groups","team","hello"]) + '<div class="foot"><button class="link" id="back">Take the walk instead</button></div>');
-      bind("back", function(){ closeSheet(); say("Hold the up arrow to walk", 2600); });
+      bind("back", function(){ closeSheet(); say("Tap the up arrow to walk", 2600); });
     });
   }
   var coach = document.getElementById("coach");
   function showCoach(){ coach.classList.remove("hide"); upBtn.classList.add("pulse"); }
-  function hideCoach(){ coach.classList.add("hide"); upBtn.classList.remove("pulse"); }
+  function hideCoach(){ coach.classList.add("hide"); clearPulse(); }
   document.getElementById("coachX").onclick = hideCoach;
   function skipCard(){
     hideCoach();
@@ -949,7 +1007,7 @@ fieldset.fRow{border:0;padding:0;min-width:0}
       '<h3 class="more">Other next steps</h3>' + stepLinks(["visit","discover"]) + coupon() +
       '<div class="foot"><button class="link" id="back">Take the walk instead</button></div>');
     bindSend(); bindGoals();
-    bind("back", function(){ closeSheet(); say("Hold the up arrow to walk", 2600); });
+    bind("back", function(){ closeSheet(); say("Tap the up arrow to walk", 2600); });
   }
   document.getElementById("skipTop").onclick = skipCard;
   function restart(){ closeSheet(); reset(); follow(draw(false)); showCoach(); }
