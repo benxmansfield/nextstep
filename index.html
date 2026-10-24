@@ -123,6 +123,10 @@ body.carding .pad{opacity:0;pointer-events:none}
 .card h2{font-family:"Young Serif",Georgia,serif;font-weight:400;font-size:26px;line-height:1.2;margin:0 0 8px}
 .card p{margin:0 0 16px;color:var(--muted)}
 .opts{display:grid;gap:10px}
+.btn.alt[aria-pressed="true"]{background:var(--accent);color:var(--accentInk)}
+.btn.alt[aria-pressed="true"]::before{content:"✓ "}
+.selAll{margin:-4px 0 12px!important}
+.qNext{margin-top:12px}
 .btn{appearance:none;font:inherit;font-weight:600;min-height:48px;border-radius:14px;padding:12px 16px;border:2px solid var(--accent);background:var(--accent);color:var(--accentInk);cursor:pointer;text-align:center;text-decoration:none;display:block}
 .btn.alt{background:transparent;color:var(--accent)}
 .btn:focus-visible,.link:focus-visible,.step:focus-visible,.pad button:focus-visible{outline:3px solid var(--brand2);outline-offset:3px}
@@ -538,8 +542,8 @@ fieldset.fRow{border:0;padding:0;min-width:0}
     howlong:{q:"How long have you been following Jesus?", label:"Following Jesus", opts:["Still exploring","Under a year","1 to 5 years","5+ years"]},
     looking:{q:"What are you looking for in a church?", label:"Looking for", opts:["A place to discover Jesus","Good Bible teaching","Community and friends","A place to serve","Something for my kids"]},
     area:{q:"Are you new to the area?", label:"New to the area", opts:["Just moved here","Been around a while","Just visiting"]},
-    stage:{q:"What stage of life are you in?", label:"Stage of life", opts:["Studying","Working","Raising kids","Kids have left home","Retired","Something else"]},
-    brought:{q:"What brought you to church?", label:"What brought you", opts:["I’m exploring faith","A friend invited me","Family brought me","I found you online","I’m new to the area","Looking for hope or support","Something else"]}
+    stage:{q:"What stage of life are you in?", label:"Stage of life", multi:true, opts:["Studying","Working","Raising kids","Kids have left home","Retired","Something else"]},
+    brought:{q:"What brought you to church?", label:"What brought you", opts:["I’m exploring faith","A friend or family brought me","I’m not 100% sure","Looking for a new church","Looking for hope or support","Something else"]}
   };
   var QORDER = ["howlong","looking","area","stage"];
   var ALLQ = ["brought","howlong","looking","area","stage"];
@@ -547,8 +551,8 @@ fieldset.fRow{border:0;padding:0;min-width:0}
   var STEPS = {
     visit:{t:"Plan your visit", d:"Sundays at 8:30am and 10:30am, 30 McKechnie Drive, Eight Mile Plains.", cta:"See where we meet", url:SITE+"/where-we-meet"},
     discover:{t:"Discover", short:"Discover", d:"Our course for exploring Christianity. Next course: " + DISCOVER_NEXT + ". Bring your questions, no background needed.", pick:"I’d like to come to Discover", cta:"Find out about Discover", url:SITE+"/discover"},
-    groups:{t:"Growth Groups", short:"Growth Groups", d:"Small groups that meet through the week to read the Bible, pray and share life together.", cta:"Watch this video before joining", url:"https://youtu.be/l9nRdkGaUKs"},
-    team:{t:"Serving Teams", short:"Serving Teams", d:"Use your gifts to love others. From welcome and kids to music and tech, there’s a place for you.", cta:"Or fill in the full team form", url:SITE+"/ministryform", pick:"I’d like to join the team"},
+    groups:{t:"Growth Groups", short:"Growth Groups", d:"Small groups that meet through the week to read the Bible, pray and share life together.", cta:"Watch the Growth Groups video", url:"https://youtu.be/l9nRdkGaUKs"},
+    team:{t:"Serving Teams", short:"Serving Teams", d:"Use your gifts to love others. From welcome and kids to music and tech, there’s a place for you.", cta:"Serving team sign-up form", url:SITE+"/ministryform", pick:"I’d like to join the team"},
     discoverInvite:{t:"Discover Course", d:"Bring someone to Discover to discover Jesus. Next course: " + DISCOVER_NEXT + ".", cta:"Find out about Discover", url:SITE+"/discover"},
     chat:{t:"Have a conversation", short:"Have a chat", d:"Grab a coffee with someone from Southside and ask anything. No pressure, no agenda.", pick:"I’d like a chat"},
     kids:{t:"Kids and youth", short:"Kids and youth"},
@@ -842,8 +846,7 @@ fieldset.fRow{border:0;padding:0;min-width:0}
     var keys = explorer ? ["discover","chat"] : st.returning ? ["chat","groups"] : (a.looking === "A place to serve") ? ["team","groups"] : ["groups","team"];
     // end of the walk: small tick chips, so the send form below is what stands out
     if (compact) return '<fieldset class="fld pickRow"><span>I’m interested in… <small>(tick any)</small></span><div class="picks">' +
-      keys.concat(INTS.filter(function(k){ return keys.indexOf(k) < 0; })).map(function(k){ return '<label class="goalPick"><input type="checkbox" data-int="' + k + '"' + (st.interest[k] ? ' checked' : '') + '><span>' + esc(intLabel(k)) + '</span></label>'; }).join("") + '</div>' +
-      '<p class="pickLinks">' + keys.filter(function(k){ return STEPS[k].url; }).map(function(k){ return '<a href="' + esc(STEPS[k].url) + '" target="_blank" rel="noopener">' + esc(STEPS[k].cta) + '</a>'; }).join(" · ") + '</p></fieldset>';
+      keys.concat(INTS.filter(function(k){ return keys.indexOf(k) < 0; })).map(function(k){ return '<label class="goalPick"><input type="checkbox" data-int="' + k + '"' + (st.interest[k] ? ' checked' : '') + '><span>' + esc(intLabel(k)) + '</span></label>'; }).join("") + '</div></fieldset>';
     var icons = {discover:dIcon, chat:cIcon, groups:gIcon, team:tIcon};
     return '<p>' + intro + '</p><div class="goals">' + keys.map(function(k){ return goal(k, icons[k]); }).join("") + '</div>';
   }
@@ -851,10 +854,10 @@ fieldset.fRow{border:0;padding:0;min-width:0}
     card.querySelectorAll("[data-int]").forEach(function(c){ c.onchange = function(){ st.interest[c.getAttribute("data-int")] = c.checked; refreshRows(); }; });
   }
   function moreSteps(){
-    if (st.route === "discover") return '<h3 class="more">Other next steps</h3>' + stepLinks(["visit"]);
-    var keys = tailored().filter(function(k){ return k !== "groups" && k !== "team" && k !== "discover"; });
+    if (st.route === "discover") return '<h3 class="more">Find out more</h3>' + stepLinks(["discover","visit"]);
+    var keys = ["groups","team"].concat(tailored().filter(function(k){ return k !== "groups" && k !== "team" && k !== "discover"; }));
     keys.push("discoverInvite");
-    return keys.length ? '<h3 class="more">Other next steps</h3>' + stepLinks(keys) : '';
+    return '<h3 class="more">Find out more</h3>' + stepLinks(keys);
   }
   function tailored(){
     var a = st.answers, keys = [];
@@ -868,7 +871,7 @@ fieldset.fRow{border:0;padding:0;min-width:0}
   }
   function kidsNote(){
     var a = st.answers;
-    return (a.looking === "Something for my kids" || a.stage === "Raising kids")
+    return (a.looking === "Something for my kids" || /Raising kids/.test(a.stage || ""))
       ? '<p class="note">Bringing kids? Tick Kids and youth below and we’ll help you find the right kids’ program on Sunday.</p>' : '';
   }
   function summaryText(){
@@ -953,8 +956,20 @@ fieldset.fRow{border:0;padding:0;min-width:0}
   function question(key){
     var Q = QUESTIONS[key], n = QORDER.indexOf(key) + 1;
     openSheet((n ? '<p class="kicker">Signpost ' + n + ' of ' + QORDER.length + '</p>' : '<p class="kicker">Signpost</p>') + '<h2>' + esc(Q.q) + '</h2>' +
-      '<div class="opts">' + Q.opts.map(function(o, i){ return '<button class="btn alt" data-i="'+i+'">'+esc(o)+'</button>'; }).join("") + '</div>' +
+      (Q.multi ? '<p class="fine selAll">Select all that apply</p>' : '') +
+      '<div class="opts">' + Q.opts.map(function(o, i){ return '<button class="btn alt" data-i="'+i+'"' + (Q.multi ? ' aria-pressed="false"' : '') + '>'+esc(o)+'</button>'; }).join("") + '</div>' +
+      (Q.multi ? '<div class="opts qNext"><button class="btn" id="qNext" disabled>Next</button></div>' : '') +
       '<div class="foot"><button class="link" id="skipQ">Skip this one</button></div>');
+    if (Q.multi){
+      // several answers can be true at once: tick them, then Next
+      var picked = card.querySelectorAll("[data-i]"), next = document.getElementById("qNext");
+      picked.forEach(function(b){ b.onclick = function(){ b.setAttribute("aria-pressed", b.getAttribute("aria-pressed") === "true" ? "false" : "true");
+        next.disabled = !card.querySelector('[data-i][aria-pressed="true"]'); }; });
+      next.onclick = function(){ st.answers[key] = Array.prototype.filter.call(picked, function(b){ return b.getAttribute("aria-pressed") === "true"; }).map(function(b){ return Q.opts[+b.getAttribute("data-i")]; }).join(", ");
+        closeSheet(); goAuto(); say("Thanks!", 1200); };
+      bind("skipQ", function(){ closeSheet(); goAuto(); });
+      return;
+    }
     card.querySelectorAll("[data-i]").forEach(function(b){
       b.onclick = function(){ st.answers[key] = Q.opts[+b.getAttribute("data-i")]; if (key === "brought" && /hope|support/i.test(st.answers[key])) st.interest.chat = true; closeSheet(); goAuto(); say("Thanks!", 1200); };
     });
@@ -1025,9 +1040,9 @@ fieldset.fRow{border:0;padding:0;min-width:0}
   // ===== Landing page + standalone form =====
   var landing = document.getElementById("landing"), formView = document.getElementById("formView"), fCard = document.getElementById("fCard");
   function showLanding(){ release(); closeSheet(); hideCoach(); formView.hidden = true; landing.hidden = false; document.body.classList.add("overlay"); landing.scrollTop = 0; }
-  function chipGroup(name, legend, opts){
-    return '<fieldset class="fRow"><legend>' + esc(legend) + ' <small>(optional)</small></legend><div class="chips">' +
-      opts.map(function(o){ return '<label class="chip"><input type="radio" name="'+name+'" value="'+esc(o)+'"><span>'+esc(o)+'</span></label>'; }).join("") + '</div></fieldset>';
+  function chipGroup(name, legend, opts, multi){
+    return '<fieldset class="fRow"><legend>' + esc(legend) + ' <small>(' + (multi ? 'select all that apply' : 'optional') + ')</small></legend><div class="chips">' +
+      opts.map(function(o){ return '<label class="chip"><input type="' + (multi ? 'checkbox' : 'radio') + '" name="'+name+'" value="'+esc(o)+'"><span>'+esc(o)+'</span></label>'; }).join("") + '</div></fieldset>';
   }
   function buildForm(){
     fCard.innerHTML = '<form id="fullForm" novalidate>' +
@@ -1041,11 +1056,11 @@ fieldset.fRow{border:0;padding:0;min-width:0}
       '<h3>Where you’re at</h3>' +
       chipGroup("service", "Which service do you come to?", SERVICES) +
       chipGroup("road", "Where are you with Jesus?", ["Still figuring it out","I know Jesus","Coming back to faith"]) +
-      chipGroup("brought", QUESTIONS.brought.q, QUESTIONS.brought.opts) +
       chipGroup("howlong", QUESTIONS.howlong.q, QUESTIONS.howlong.opts) +
+      chipGroup("brought", QUESTIONS.brought.q, QUESTIONS.brought.opts) +
       chipGroup("looking", QUESTIONS.looking.q, QUESTIONS.looking.opts) +
       chipGroup("area", QUESTIONS.area.q, QUESTIONS.area.opts) +
-      chipGroup("stage", QUESTIONS.stage.q, QUESTIONS.stage.opts) +
+      chipGroup("stage", QUESTIONS.stage.q, QUESTIONS.stage.opts, true) +
       '<div class="fRow"><label for="ffMsg">Anything you’d like us to know? <small>(optional)</small></label><textarea id="ffMsg" rows="3"></textarea></div>' +
       '<p class="fErr" id="ffErr" role="alert"></p>' +
       '<div class="hpot" aria-hidden="true"><label>Leave this empty<input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>' +
@@ -1056,7 +1071,7 @@ fieldset.fRow{border:0;padding:0;min-width:0}
     form.addEventListener("submit", function(ev){
       ev.preventDefault();
       var v = function(id){ return (document.getElementById(id).value || "").trim(); };
-      var r = function(n){ var el = form.querySelector('input[name="'+n+'"]:checked'); return el ? el.value : ""; };
+      var r = function(n){ return Array.prototype.map.call(form.querySelectorAll('input[name="'+n+'"]:checked'), function(el){ return el.value; }).join(", "); };
       var fints = Array.prototype.map.call(form.querySelectorAll('input[name="int"]:checked'), function(i){ return i.value; });
       var d = {name:v("ffName"), email:v("ffEmail"), phone:v("ffPhone"), message:withService(r("service"), v("ffMsg")), interested:fints.join(", "), brought:r("brought"),
         road:(r("road") ? r("road") + " (form)" : "Form"), howlong:r("howlong"), looking:r("looking"), area:r("area"), stage:r("stage")};
