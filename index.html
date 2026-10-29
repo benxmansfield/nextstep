@@ -515,7 +515,7 @@ fieldset.fRow{border:0;padding:0;min-width:0}
   var GFORM = "https://docs.google.com/forms/d/e/1FAIpQLSfWoVLKHCDbpqlZuLBQqTEGUObrpO4p8Pp-ei2kiP6_tmPN6A/";
   var GF = {name:"entry.1009246163", email:"entry.1933653843", phone:"entry.2010711695", road:"entry.1437849596",
     howlong:"entry.1857754623", looking:"entry.1891446423", area:"entry.1257652782", stage:"entry.281137944", message:"entry.1916940427",
-    interested:"entry.1716316139", brought:"entry.1758832198", consent:"entry.1996411179"};
+    interested:"entry.1716316139", brought:"entry.1758832198", consent:"entry.1996411179", service:"entry.1917630548"};
   var ns = "http://www.w3.org/2000/svg";
   var reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
   var SPEED = 200; // world units per second
@@ -568,7 +568,6 @@ fieldset.fRow{border:0;padding:0;min-width:0}
 
   var SERVICES = ["8:30am","10:30am","Not yet"];
   var INTS = ["discover","chat","groups","team","kids"]; // the next steps people can tick, in the game and the form
-  function withService(svc, msg){ return svc ? "Service: " + svc + (msg ? "\n\n" + msg : "") : msg; }
   function intLabel(k){ return STEPS[k].short || STEPS[k].t; }
   var roadsG = document.getElementById("roads"), walkedG = document.getElementById("walkedG");
   var byId = {}, out = {};
@@ -944,7 +943,7 @@ fieldset.fRow{border:0;padding:0;min-width:0}
       var v = function(id){ return (document.getElementById(id).value || "").trim(); };
       var ints = interestList();
       var svc = f.querySelector('input[name="svc"]:checked');
-      var d = {name:v("fName"), email:v("fEmail"), phone:v("fPhone"), message:withService(svc ? svc.value : "", v("fMsg")), interested:ints.join(", "), brought:st.answers.brought||"",
+      var d = {name:v("fName"), email:v("fEmail"), phone:v("fPhone"), message:v("fMsg"), service:svc ? svc.value : "", interested:ints.join(", "), brought:st.answers.brought||"",
         road: roadLabel() || "Skipped the walk",
         howlong:st.answers.howlong||"", looking:st.answers.looking||"", area:st.answers.area||"", stage:st.answers.stage||""};
       var err = document.getElementById("fErr");
@@ -1121,7 +1120,7 @@ fieldset.fRow{border:0;padding:0;min-width:0}
       var v = function(id){ return (document.getElementById(id).value || "").trim(); };
       var r = function(n){ return Array.prototype.map.call(form.querySelectorAll('input[name="'+n+'"]:checked'), function(el){ return el.value; }).join(", "); };
       var fints = Array.prototype.map.call(form.querySelectorAll('input[name="int"]:checked'), function(i){ return i.value; });
-      var d = {name:v("ffName"), email:v("ffEmail"), phone:v("ffPhone"), message:withService(r("service"), v("ffMsg")), interested:fints.join(", "), brought:r("brought"),
+      var d = {name:v("ffName"), email:v("ffEmail"), phone:v("ffPhone"), message:v("ffMsg"), service:r("service"), interested:fints.join(", "), brought:r("brought"),
         road:(r("road") ? r("road") + " (form)" : "Form"), howlong:r("howlong"), looking:r("looking"), area:r("area"), stage:r("stage")};
       var err = document.getElementById("ffErr");
       if (!d.name){ err.textContent = "Please add your name."; document.getElementById("ffName").focus(); return; }
